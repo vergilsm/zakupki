@@ -1,19 +1,23 @@
+require 'sequel'
 require 'nokogiri'
 require 'open-uri'
-require 'sequel'
-require_relative 'lib/regions.rb'
-require_relative 'lib/urls.rb'
-
-load_regions = Region.new
-
-base_url = Url.base_url
-user_agent = Url.user_agent
-doc = Url.doc(base_url, user_agent)
-regions_on_page = Url.regions_on_page(doc)
-
-load_regions.all_regions(regions_on_page)
 
 db = Sequel.connect('sqlite://db/zakupki.sqlite3')
 regions = db[:regions]
 
 regions.each { |region| puts region }
+
+#puts "Введите номер региона"
+#region_user_input = gets.chomp
+
+#puts "Введите дату"
+#data_user_input = gets.chomp
+
+#regions.each { |reg| region = reg[:name] if reg[:id] == region_user_input  }
+
+#region_passport_url = "https://zakupki.gov.ru/epz/opendata/card/passport-info.html?passportId=#{region}"
+
+#doc = Nokogiri::HTML(open(region_passport_url, 'User-Agent' => user_agent, 'read_timeout' => '10' ), nil, "UTF-8")
+
+#ftp_url = doc.xpath("//div/section/span/a[@class='cancelCustomBlockUI']/@href").text
+

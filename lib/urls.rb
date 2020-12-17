@@ -16,6 +16,10 @@ class Url
                             'read_timeout' => '10' ), nil, "UTF-8")
   end
 
+  def self.link(doc)
+    doc.xpath("//div/ul/a[@class='paginator-button paginator-button-next']/@href").text
+  end
+
   def self.regions_on_page(doc)
     doc.xpath("//div[@id='search-registry-entrys-block']//div[@class='text-break registry-entry__header-mid__number']/a/text()").map { |x| x.to_s.delete("\n").strip }
   end
