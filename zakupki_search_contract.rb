@@ -19,25 +19,21 @@ region_user_input =  $stdin.gets.chomp
 
 puts "Введите дату пример: 21-12-2020"
 date_user_input =  $stdin.gets.chomp
-date = Date.parse(date_user_input)
-previous_day = (date -=1).strftime("%Y%m%d")
-desired_date = Date.parse(date_user_input).strftime("%Y%m%d")
+desired_date = Date.parse(date_user_input).strftime("%d%m%Y")
 
-ZipList.get_zip_list(regions, region_user_input, previous_day, desired_date)
+ZipList.get_zip_list(regions, region_user_input, desired_date)
 zip_list = Dir["./zip_files/*.zip"]
 
 zip_list.each do |file|
-  ExtractZip.get_xml(file)
+  ExtractZip.get_xml_list(file)
 end
 
 xml_list = Dir["./xml_files/*.xml"]
-
-xml_list.delete_if do |f|
-  f.include?("contractAvailableForElAct") ||
-  f.include?("contractProcedure_")
-end
+xml_list.delete_if { |f| f.include?("contractProcedure_") }
+xml_list.delete_if { |f| f.include?("contractProcedure_") }
 
 OpenXml.get_contract_list
 
-xml_list.reject{|i| File.directory?(i) }.each{ |i| File.delete(i) }
 zip_list.reject{|i| File.directory?(i) }.each{ |i| File.delete(i) }
+xml_list = Dir["./xml_files/*.xml"]
+xml_list.reject{|i| File.directory?(i) }.each{ |i| File.delete(i) }

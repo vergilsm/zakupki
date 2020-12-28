@@ -13,7 +13,9 @@ def extract_zip(file, destination)
   end
 end
 
-zip_file = "contract_Moskva_2020122000_2020122100_001.xml.zip"
 destination = "./xml_files/"
+zip_list = Dir["./zip_files/*.zip"]
 
-extract_zip(zip_file, destination)
+zip_list.each do |zip_file|
+  extract_zip(zip_file, destination)
+end

@@ -1,7 +1,7 @@
 require 'zip'
 
 class ExtractZip
-  def self.get_xml(file)
+  def self.get_xml_list(file)
     destination = "./xml_files/"
     FileUtils.mkdir_p(destination)
 

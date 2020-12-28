@@ -7,7 +7,9 @@ class OpenXml
     xml_files.each do |file|
       response = URI.open(file.to_s).read
       doc = Nokogiri::XML(response)
-      puts doc.css('//regNum').text
+      doc.css('//regNum').each do |num|
+        puts num.text if num.text.scan(/\d/).length >= 19
+      end
     end
   end
 end
